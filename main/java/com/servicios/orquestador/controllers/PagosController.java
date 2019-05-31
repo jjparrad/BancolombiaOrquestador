@@ -12,35 +12,37 @@ import org.springframework.web.client.RestTemplate;
 public class PagosController {
 	
 	
-	private String urlCuentas = "http://www.mocky.io/v2/5cec67a33300007e6f6d7a8b";
-	private String urlTarjetas = "http://www.mocky.io/v2/5cec669d33000092726d7a89";
-	private String urlRegistros = "http://www.mocky.io/v2/5cec66a5330000165f6d7a8a";
+	//private String urlCuentas = "http://www.mocky.io/v2/5cec67a33300007e6f6d7a8b";
+	private String urlTarjetas = "http://localhost:8081/pago";
+	//private String urlRegistros = "http://www.mocky.io/v2/5cec66a5330000165f6d7a8a";
 	
 	
 	
 	@PutMapping("/pago")
 	public Pago pagar(@RequestBody OrdenPago ordenPago) {
-		Double saldo;
+		//Double saldo;
+		Double saldo = 321.0;
 		Double deuda;
 		
+		/*
 		saldo = llamarCuenta(ordenPago.getCuenta(), ordenPago.getMonto());
 		if (saldo < 0){
 			deuda = getDeuda(ordenPago.getTarjeta());
 			return new Pago(-saldo, deuda, "Rechazado: Fondos insuficientes");
 		} 
-		
+		*/
 		
 		deuda = llamarTarjeta(ordenPago.getTarjeta(), ordenPago.getMonto());
 		if (deuda < 0) {
-			saldo = devolverFondos(ordenPago.getCuenta(), ordenPago.getMonto());
+			//saldo = devolverFondos(ordenPago.getCuenta(), ordenPago.getMonto());
 			return new Pago(saldo, -deuda, "Rechazado: La tarjeta indicada no posee tal deuda");	
 		}
 		
-		llamarRegistro(ordenPago);
+		//llamarRegistro(ordenPago);
 		return new Pago(saldo, deuda, "Aceptado: Pago exitoso");
 		
 	}
-	
+	/*
 	private Double llamarCuenta(String cuenta, double monto) {
 		OrdenCuenta orden = new OrdenCuenta(cuenta, monto);
 		
@@ -61,19 +63,18 @@ public class PagosController {
 	private Double devolverFondos(String cuenta, double monto) {
 		return 0.0;
 	}
-
+	*/
 	private Double llamarTarjeta(String tarjeta, double monto) {
 		
 		OrdenTarjeta orden = new OrdenTarjeta(tarjeta, monto);
 		
 		System.out.println(orden);
 		
-		HttpEntity<String> request = new HttpEntity<String>(orden.toString());
+		HttpEntity<OrdenTarjeta> request = new HttpEntity<OrdenTarjeta>(orden);
 		RestTemplate restTemplate = new RestTemplate();
-		ResponseEntity<String> res = restTemplate.exchange(urlTarjetas, HttpMethod.PUT, request, String.class);
+		ResponseEntity<Double> res = restTemplate.exchange(urlTarjetas, HttpMethod.PUT, request, Double.class);
 		
-		String[] json = res.getBody().split(":");
-		double valor = Double.parseDouble(json[json.length-1]);
+		double valor = res.getBody();
 		
 		if(res.getStatusCodeValue() == 201) {
 			return valor;
@@ -81,7 +82,7 @@ public class PagosController {
 			return -valor;
 		}
 	}
-	
+	/*
 	private Double getDeuda(String tarjeta) {
 		// TODO Auto-generated method stub
 		return 0.0;
@@ -98,6 +99,6 @@ public class PagosController {
 		} else {
 			return false;
 		}
-	}
+	}*/
 	
 }

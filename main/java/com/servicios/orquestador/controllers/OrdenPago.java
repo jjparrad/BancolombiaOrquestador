@@ -32,8 +32,4 @@ public class OrdenPago {
 	public void setMonto(Double monto) {
 		this.monto = monto;
 	}
-
-	public String toString() {
-		return "{ \"numCuenta\":\"\"+ numCuenta + \"numTarjeta\":\""+ numTarjeta + "\", \"monto\":"  + monto + "}";
-	}
 }
