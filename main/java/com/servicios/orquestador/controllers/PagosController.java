@@ -13,7 +13,7 @@ public class PagosController {
 	
 	
 	//private String urlCuentas = "http://www.mocky.io/v2/5cec67a33300007e6f6d7a8b";
-	private String urlTarjetas = "http://localhost:8081/pago";
+	private String urlTarjetas = "http://localhost:8081/tarjetaCredito/pago";
 	//private String urlRegistros = "http://www.mocky.io/v2/5cec66a5330000165f6d7a8a";
 	
 	
@@ -64,7 +64,7 @@ public class PagosController {
 		return 0.0;
 	}
 	*/
-	private Double llamarTarjeta(String tarjeta, double monto) {
+	private double llamarTarjeta(String tarjeta, double monto) {
 		
 		OrdenTarjeta orden = new OrdenTarjeta(tarjeta, monto);
 		
@@ -72,11 +72,11 @@ public class PagosController {
 		
 		HttpEntity<OrdenTarjeta> request = new HttpEntity<OrdenTarjeta>(orden);
 		RestTemplate restTemplate = new RestTemplate();
-		ResponseEntity<Double> res = restTemplate.exchange(urlTarjetas, HttpMethod.PUT, request, Double.class);
+		ResponseEntity<Double> res = restTemplate.exchange(urlTarjetas + "/" +tarjeta, HttpMethod.PUT, request, Double.class);
 		
 		double valor = res.getBody();
 		
-		if(res.getStatusCodeValue() == 201) {
+		if(res.getStatusCodeValue() == 200) {
 			return valor;
 		} else {
 			return -valor;

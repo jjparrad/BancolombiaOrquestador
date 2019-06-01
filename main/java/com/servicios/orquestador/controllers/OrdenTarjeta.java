@@ -11,7 +11,7 @@ public class OrdenTarjeta {
 	 * Nombres de variables como las solicita el API
 	 */
 	private String numTarjeta;
-	private Double monto;
+	private double monto;
 	
 	
 	public OrdenTarjeta() {}
@@ -27,7 +27,7 @@ public class OrdenTarjeta {
 	public void setTarjeta(String tarjeta) {
 		this.numTarjeta = tarjeta;
 	}
-	public Double getMonto() {
+	public double getMonto() {
 		return monto;
 	}
 	public void setMonto(Double monto) {
