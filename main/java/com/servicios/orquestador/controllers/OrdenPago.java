@@ -8,8 +8,8 @@ public class OrdenPago {
 	private Double monto;
 	
 	
-	public OrdenPago(String cuenta, String numTarjeta, Double monto) {
-		this.numCuenta = cuenta;
+	public OrdenPago(String numCuenta, String numTarjeta, Double monto) {
+		this.numCuenta = numCuenta;
 		this.numTarjeta = numTarjeta;
 		this.monto = monto;
 	}

@@ -16,8 +16,9 @@ public class OrdenCuenta {
 	
 	public OrdenCuenta() {}
 	
-	public OrdenCuenta(String numTarjeta, Double monto) {
-		this.numCuenta = numTarjeta;
+	public OrdenCuenta(String numCuenta, Double monto) {
+		
+		this.numCuenta = numCuenta;
 		this.monto = monto;
 	}
 	
