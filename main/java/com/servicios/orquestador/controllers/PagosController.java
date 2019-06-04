@@ -16,6 +16,7 @@ public class PagosController {
 	private String urlTarjetas = "http://localhost:8081/tarjetaCredito/";
 	//private String urlRegistros = "http://www.mocky.io/v2/5cec66a5330000165f6d7a8a";
 	
+	private boolean existeDeuda;
 	
 	
 	@PutMapping("/pago")
@@ -36,7 +37,7 @@ public class PagosController {
 		
 		
 		deuda = llamarTarjeta(tarjeta, monto);
-		if (deuda < 0) {
+		if (deuda < 0 || this.existeDeuda == false) {
 			saldo = devolverFondos(ordenPago.getCuenta(), ordenPago.getMonto());
 			return new Pago(saldo, -deuda, "Rechazado: La tarjeta indicada no posee tal deuda");	
 		}
@@ -92,8 +93,14 @@ public class PagosController {
 		double valor = res.getBody();
 		
 		if(res.getStatusCodeValue() == 200) {
+			this.existeDeuda = true;
 			return valor;
 		} else {
+			if(valor == 0){
+				this.existeDeuda = false;
+				return 0;
+			}
+			this.existeDeuda = true;
 			return -valor;
 		}
 	}
