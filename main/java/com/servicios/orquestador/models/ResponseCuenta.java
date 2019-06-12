@@ -1,4 +1,4 @@
-package com.servicios.orquestador.controllers;
+package com.servicios.orquestador.models;
 
 /**
  * Clase encargada de manejar el formato que entrega el API de Cuentas de ahorro

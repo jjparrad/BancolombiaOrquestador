@@ -1,4 +1,4 @@
-package com.servicios.orquestador.controllers;
+package com.servicios.orquestador.models;
 
 /**
  * Clase encargada de manejar el formato que recibe el API de Tarjetas de Crédito

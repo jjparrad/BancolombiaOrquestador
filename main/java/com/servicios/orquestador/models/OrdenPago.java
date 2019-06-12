@@ -1,4 +1,4 @@
-package com.servicios.orquestador.controllers;
+package com.servicios.orquestador.models;
 
 public class OrdenPago {
 
